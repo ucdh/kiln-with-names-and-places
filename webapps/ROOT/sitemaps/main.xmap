@@ -63,6 +63,27 @@
         <map:transform src="cocoon://_internal/template/search.xsl" />
         <map:serialize />
       </map:match>
+	  
+	  <!-- Names. -->
+      <map:match id="local-names-index-display" pattern="names/*">        
+        <map:aggregate element='aggregation'>
+            <map:part src="cocoon://internal/authority/names/{1}"/>
+            <map:part src="cocoon://_internal/menu/main.xml?url=name/{1}"/>        
+        </map:aggregate>
+        <map:transform src="cocoon://_internal/template/names-index.xsl" />
+        <map:serialize/>
+      </map:match>
+      
+    <!-- Name instance -->
+      <map:match id="local-names-index-display" pattern="id/*">        
+        <map:aggregate element='aggregation'>
+            <map:part src="cocoon://internal/authority/id/{1}"/>
+            
+            <map:part src="cocoon://_internal/menu/main.xml?url=id/{1}"/>            
+        </map:aggregate>
+        <map:transform src="cocoon://_internal/template/name-instance.xsl" />
+        <map:serialize/>
+      </map:match>
 
       <!-- TEI texts. -->
       <map:match id="local-tei-index-display" pattern="text/">

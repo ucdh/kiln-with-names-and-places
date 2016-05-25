@@ -2,6 +2,7 @@
 <?oxygen RNGSchema="../schema/menu/menu.rng" type="xml"?>
 <root xmlns="http://www.kcl.ac.uk/artshums/depts/ddh/kiln/ns/1.0">
   <menu href="text/" label="Texts" />
-  <menu href="search/" label="Search" />
+  <menu href='names/A' label='People and Places'/>
+  <menu href="search/" label="Search" />  
   <menu href="admin/" label="Admin" />
 </root>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<kiln:root xmlns:tei="http://www.tei-c.org/ns/1.0"
+           xmlns:xi="http://www.w3.org/2001/XInclude"
+           xmlns:kiln="http://www.kcl.ac.uk/artshums/depts/ddh/kiln/ns/1.0"
+           xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+           xmlns:mads="http://www.loc.gov/mads/">
+
+    <xsl:import href="cocoon://_internal/template/xsl/stylesheets/mads-to-html.xsl" />
+    <style>
+    tbody td:nth-of-type(odd)
+        {
+            background:#D3D3D3;
+        }
+    </style>
+  
+  
+  
+  <kiln:parent>
+    <xi:include href="base.xml" />
+  </kiln:parent>
+
+  <kiln:child>
+    <kiln:block name="title">
+      <kiln:super />
+      <xsl:text>People and Places</xsl:text>
+    </kiln:block>    
+
+    <kiln:block name="page-heading">
+      <kiln:super />
+      <xsl:text>Browse</xsl:text>
+    </kiln:block>
+   
+   <kiln:block name="content">      
+      <div class='row'>
+            <div class="large-12 columns">               
+              <xsl:apply-templates select="/aggregation/alphabet"/>
+            </div>
+        </div>   
+      <div class="row">        
+            <xsl:apply-templates select="/aggregation/file"/>
+      </div>
+    </kiln:block>
+    
+    <kiln:block name="end-js">
+      <kiln:super />
+      <script src="{$kiln:assets-path}/scripts/tinysort.js" type='text/javascript'/>
+      <script>        
+        $(document).ready(function(){
+            tinysort('.person>li');
+            tinysort('.place>li');
+        }    
+        );        
+      </script>
+    </kiln:block>
+   
+  </kiln:child>
+</kiln:root>

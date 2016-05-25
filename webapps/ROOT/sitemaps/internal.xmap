@@ -24,6 +24,27 @@
         <map:serialize type="xml" />
       </map:match>
     </map:pipeline>
+	
+	<!-- Names pipeline. -->
+	<map:pipeline id="authority" internal-only="true">
+      <map:match id="authority-typed-metadata" pattern="authority/names/*">
+        <map:generate src="../assets/authority/names.xml" />
+        <map:transform src="../stylesheets/metadata/names-metadata-generator.xsl"> 
+            <map:parameter name='letter' value='{1}'/>
+        </map:transform>
+        <map:serialize type="xml"/>
+      </map:match>
+     </map:pipeline>
+     
+     <map:pipeline id="authority" internal-only="true">
+      <map:match id="name-instance" pattern="authority/id/*">
+        <map:generate src="../assets/authority/names.xml" />
+        <map:transform src="../stylesheets/metadata/name-instance-metadata-generator.xsl"> 
+            <map:parameter name='ref' value='{1}'/>
+        </map:transform>
+        <map:serialize type="xml"/>
+      </map:match>
+     </map:pipeline>
 
     <!-- Metadata pipeline. -->
     <map:pipeline id="metadata" internal-only="true">
