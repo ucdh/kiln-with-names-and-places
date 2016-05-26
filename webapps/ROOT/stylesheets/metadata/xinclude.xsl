@@ -8,9 +8,10 @@
   <xsl:include href="cocoon://_internal/url/reverse.xsl" />
 
   <xsl:param name="type" />
+  <xsl:param name="id" />   
 
   <xsl:template match="/">
-    <xsl:element name="{$type}">
+    <xsl:element name="files">
       <!-- Skip the containing directory as it is built into the
            Cocoon pipelines etc, and we know exactly what it is. -->
       <xsl:apply-templates select="dir:directory/dir:*"/>
@@ -29,6 +30,6 @@
     <xsl:param name="root" select="''" />
     <xsl:variable name="name" select="substring-before(@name, '.xml')" />
     <xi:include href="{kiln:url-for-match('local-typed-metadata',
-                      ($type, concat($root, $name)))}" />
+                              ($type, $id, concat($root, $name)))}" />  
   </xsl:template>
 </xsl:stylesheet>

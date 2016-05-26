@@ -78,7 +78,7 @@
       <map:match id="local-names-index-display" pattern="id/*">        
         <map:aggregate element='aggregation'>
             <map:part src="cocoon://internal/authority/id/{1}"/>
-            
+            <map:part src="cocoon://internal/{1}/metadata/name-instance.xml" />
             <map:part src="cocoon://_internal/menu/main.xml?url=id/{1}"/>            
         </map:aggregate>
         <map:transform src="cocoon://_internal/template/name-instance.xsl" />
@@ -92,7 +92,7 @@
                files. This would be better done with a Solr query
                after indexing, but for demonstration and quick start
                purposes, use this method. -->
-          <map:part src="cocoon://internal/metadata/files.xml" />
+          <map:part src="cocoon://internal/text/metadata/files.xml" />
           <map:part src="cocoon://_internal/menu/main.xml?url=text/" />
         </map:aggregate>
         <map:transform src="cocoon://_internal/template/text-index.xsl" />
