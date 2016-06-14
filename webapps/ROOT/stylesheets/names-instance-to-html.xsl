@@ -61,7 +61,7 @@
    <xsl:template match="file">        
         <xsl:if test='person/@id or place/@id'>
             <tr>
-                <td><a href="/letter/{@path}"><xsl:value-of select='@xmlid'/></a></td>
+                <td><a href="/text/{@xmlid}.html"><xsl:value-of select='@xmlid'/></a></td>
                 <td class='date' style='visibility:hidden'><xsl:value-of select='@publication_date'/></td>
                 <td><xsl:value-of select='@title'/></td>
                 

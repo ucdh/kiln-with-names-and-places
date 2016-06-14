@@ -9,8 +9,8 @@
                  pattern="tei/preprocess/**.xml">
         <map:generate src="../content/xml/tei/{1}.xml" />
         <map:transform src="../kiln/stylesheets/tei/join-elements.xsl" />
-        <map:transform src="../kiln/stylesheets/tei/annotate.xsl" />
-        <map:serialize type="xml" />
+        <map:transform src="../kiln/stylesheets/tei/annotate.xsl" />        
+		<map:serialize type="xml" />
       </map:match>
 
       <!-- Get search results. -->
