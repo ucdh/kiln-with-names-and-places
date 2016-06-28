@@ -24,11 +24,11 @@ highlighted in the letter.
 To create your name and place page:
 
 Generate a Metadata Authority Description Schema (MADS) file using the 
-Python code in the scripts folder ("\webapps\ROOT\assets\scripts\addnames")
+Python code in the scripts folder (\webapps\ROOT\assets\scripts\addnames)
 
--- Add your files to the TEI_IN folder
--- Run addnames.py using Python 2.7
--- Check error messages for missed names
+- Add your files to the TEI_IN folder
+- Run addnames.py using Python 2.7
+- Check error messages for missed names
 
 The MADS file can be added to by running the script again over new XML files 
 (names and places already in the file will be skipped). Changes to MAD 
