@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <query>
   <df>text</df>
-  <facet>true</facet>
-  <facet.field>author</facet.field>
+  <facet>true</facet>  
   <facet.field>publication_date</facet.field>
   <facet.mincount>1</facet.mincount>
   <facet.sort>index</facet.sort>

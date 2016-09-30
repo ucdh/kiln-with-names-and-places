@@ -17,7 +17,7 @@
           <meta content="width=device-width" name="viewport" />
           <meta content="IE=edge,chrome=IE8" http-equiv="X-UA-Compatible" />
           <title>
-            <kiln:block name="title">Kiln: </kiln:block>
+            <kiln:block name="title">Roy Bruce Letters</kiln:block>
           </title>
           <kiln:block name="css">
             <link href="{$kiln:assets-path}/foundation/css/normalize.css"
@@ -28,6 +28,7 @@
                   type="text/css" />
             <link href="{$kiln:assets-path}/styles/site.css" rel="stylesheet"
                   type="text/css" />
+			<link href="{$kiln:assets-path}/styles/lightbox.css" rel="stylesheet" type="text/css"/>	 
           </kiln:block>
           <kiln:block name="js">
             <script src="{$kiln:assets-path}/foundation/js/vendor/custom.modernizr.js">&#160;</script>
@@ -38,11 +39,12 @@
       <kiln:block name="body">
         <body>
           <kiln:block name="navigation">
+            <div style='background-color:#efd4a9'><img src='/assets/images/banner/banner.jpg'/></div>
             <nav class="top-bar">
-              <kiln:block name="main-navigation">
+              <kiln:block name="main-navigation">                
                 <ul class="title-area">
                   <li class="name">
-                    <h1><a href="{$kiln:context-path}/">Kiln</a></h1>
+                    <h1><a href="{$kiln:context-path}/">Roy Bruce Letters</a></h1>
                   </li>
                   <li class="toggle-topbar menu-icon">
                     <a href="#"><span>Menu</span></a>
@@ -90,11 +92,15 @@
                  is no reason to use Foundation's check whether to use
                  jQuery or Zepto. -->
             <script src="{$kiln:assets-path}/foundation/js/vendor/jquery.js" />
-            <script src="{$kiln:assets-path}/foundation/js/foundation.min.js" />
-            <script>$(document).foundation();</script>
+            <script src="{$kiln:assets-path}/foundation/js/foundation.min.js" /><script src="{$kiln:assets-path}/scripts/lightbox.js" />    
+            <script src="{$kiln:assets-path}/scripts/cleandates.js" type='text/javascript'/>
+            <script>            
+            $(document).foundation();
+            </script>
           </kiln:block>
         </body>
-      </kiln:block>
+      </kiln:block>      
+      
     </html>
   </kiln:block>
 </kiln:root>

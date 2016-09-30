@@ -62,9 +62,9 @@
         </map:aggregate>
         <map:transform src="cocoon://_internal/template/search.xsl" />
         <map:serialize />
-      </map:match>
-	  
-	  <!-- Names. -->
+      </map:match>      
+     
+     <!-- Names. -->
       <map:match id="local-names-index-display" pattern="names/*">        
         <map:aggregate element='aggregation'>
             <map:part src="cocoon://internal/authority/names/{1}"/>
@@ -84,48 +84,59 @@
         <map:transform src="cocoon://_internal/template/name-instance.xsl" />
         <map:serialize/>
       </map:match>
-
+     
       <!-- TEI texts. -->
-      <map:match id="local-tei-index-display" pattern="text/">
+      <map:match id="local-tei-index-display" pattern="letter/">
         <map:aggregate element="aggregation">
           <!-- Use TEI metadata extracted directly from the
                files. This would be better done with a Solr query
                after indexing, but for demonstration and quick start
                purposes, use this method. -->
-          <map:part src="cocoon://internal/text/metadata/files.xml" />
-          <map:part src="cocoon://_internal/menu/main.xml?url=text/" />
+          <map:part src="cocoon://internal/letters/metadata/files.xml" />
+          <map:part src="cocoon://_internal/menu/main.xml?url=letter/" />
         </map:aggregate>
-        <map:transform src="cocoon://_internal/template/text-index.xsl" />
+        <map:transform src="cocoon://_internal/template/letter-index.xsl" />
         <map:serialize />
       </map:match>
 
-      <map:match id="local-tei-display-html" pattern="text/**.html">
+      <map:match id="local-tei-display-html" pattern="letter/*.html">
         <map:aggregate element="aggregation" label="content">
           <map:part label="tei" src="cocoon://internal/tei/preprocess/{1}.xml" />
-          <map:part src="cocoon://_internal/menu/main.xml?url=text/{1}.html" />
+          <map:part src="cocoon://_internal/menu/main.xml?url=letter/{1}.html" />
         </map:aggregate>
-        <map:transform src="cocoon://_internal/template/tei.xsl" />
+        <map:transform src="cocoon://_internal/template/tei.xsl"/>           
         <map:serialize />
-      </map:match>
+      </map:match>   
 
-      <map:match id="local-tei-display-xml" pattern="text/**.xml">
+    <map:match id="local-tei-display-html" pattern="letter/*/*.html">
+        <map:aggregate element="aggregation" label="content">
+          <map:part label="tei" src="cocoon://internal/tei/preprocess/{1}.xml" />
+          <map:part src="cocoon://_internal/menu/main.xml?url=letter/{1}.html" />
+        </map:aggregate>
+        <map:transform src="cocoon://_internal/template/tei.xsl"/>           
+        <map:serialize />
+      </map:match>         
+         
+      <map:match id="local-tei-display-xml" pattern="letter/**.xml">
         <map:read mime-type="application/tei+xml"
                   src="../content/xml/tei/{1}.xml" />
       </map:match>
 
-      <map:match id="local-tei-display-pdf" pattern="text/**.pdf">
+      <map:match id="local-tei-display-pdf" pattern="letter/**.pdf">
         <map:generate src="cocoon://internal/tei/preprocess/{1}/{2}.xml"
                       label="tei" />
         <map:transform src="cocoon://_internal/template/pdf.xsl" />
         <map:serialize type="fo2pdf" />
       </map:match>
 
-      <map:match id="local-tei-display-epub" pattern="text/**.epub">
-        <map:generate src="cocon://internal/tei/preprocess/{1}/{2}.xml"
+      <map:match id="local-tei-display-epub" pattern="letter/**.epub">
+        <map:generate src="cocoon://internal/tei/preprocess/{1}/{2}.xml"
                       label="tei" />
         <map:transform src="cocoon://_internal/template/epub.xsl" />
         <map:serialize type="xhtml" />
       </map:match>
+      
+      
 
       <!-- Example of providing content in more than one language. -->
       <map:match id="local-generic-multilingual-html" pattern="*/**.html">
@@ -144,7 +155,7 @@
     <!-- Kiln as backend pipeline. -->
     <map:pipeline>
       <!-- TEI content provided as HTML with internal metadata. -->
-      <map:match id="local-tei-backend-xml" pattern="text/*.xml">
+      <map:match id="local-tei-backend-xml" pattern="letter/*/*.xml">
         <map:generate src="cocoon://internal/tei/preprocess/{1}.xml"
                       label="tei" />
         <map:transform src="cocoon://_internal/template/backend_tei.xsl" />
@@ -170,3 +181,4 @@
     </map:handle-errors>
   </map:pipelines>
 </map:sitemap>
+

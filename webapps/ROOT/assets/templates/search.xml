@@ -31,18 +31,40 @@
               </xsl:attribute>
             </input>
           </form>
+        </div> 
+        </div>
+        <div class="row">    
+        <div class="large-4 columns">        
           <!-- List of currently applied facets. -->
           <xsl:apply-templates mode="search-results" select="/aggregation/response/lst[@name='responseHeader']/lst[@name='params']/*[@name='fq']" />
           <!-- List available facets. -->
           <xsl:apply-templates select="/aggregation/response/lst[@name='facet_counts']/lst[@name='facet_fields']"
                                mode="search-results" />
+    
         </div>
         <div class="large-8 columns">
           <xsl:apply-templates select="/aggregation/response/result"
                                mode="search-results" />
+        
         </div>
-      </div>
+        </div>
     </kiln:block>
+  
+  
+  <kiln:block name="end-js">
+      <kiln:super />
+      <script src="{$kiln:assets-path}/scripts/cleandates.js" type='text/javascript'/>
+      <script>
+        <xsl:text>
+        $(document).ready(function(){        
+            var dates = $("a[href*='date']")            
+            clean_dates(dates); 
+            $(dates).css("visibility","visible");   
+                        })       
+        </xsl:text>        
+      </script>
+    </kiln:block>
+   
   </kiln:child>
 
 </kiln:root>

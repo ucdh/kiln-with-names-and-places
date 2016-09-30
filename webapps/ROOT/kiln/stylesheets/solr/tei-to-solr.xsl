@@ -60,13 +60,10 @@
     </field>
   </xsl:template>
 
-  <xsl:template match="tei:sourceDesc//tei:publicationStmt/tei:date[1]"
-                mode="document-metadata">
-    <xsl:if test="@when">
+  <xsl:template match="tei:profileDesc/tei:creation/tei:date" mode="document-metadata">    
       <field name="publication_date">
-        <xsl:value-of select="@when" />
-      </field>
-    </xsl:if>
+        <xsl:value-of select="@when/normalize-space(.)" />
+      </field>    
   </xsl:template>
 
   <xsl:template match="text()" mode="document-metadata" />

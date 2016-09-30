@@ -5,12 +5,11 @@
     <map:pipeline internal-only="true">
       <!-- Process a TEI document prior to its use in another
            pipeline, normalising and annotating it as required. -->
-      <map:match id="local-preprocess-tei"
-                 pattern="tei/preprocess/**.xml">
+        <map:match id="local-preprocess-tei" pattern="tei/preprocess/*.xml">
         <map:generate src="../content/xml/tei/{1}.xml" />
         <map:transform src="../kiln/stylesheets/tei/join-elements.xsl" />
         <map:transform src="../kiln/stylesheets/tei/annotate.xsl" />        
-		<map:serialize type="xml" />
+        <map:serialize type="xml" />
       </map:match>
 
       <!-- Get search results. -->
@@ -23,9 +22,9 @@
         <map:transform type="xinclude" />
         <map:serialize type="xml" />
       </map:match>
-    </map:pipeline>
-	
-	<!-- Names pipeline. -->
+    </map:pipeline>    
+   
+    <!-- Names pipeline. -->
 	<map:pipeline id="authority" internal-only="true">
       <map:match id="authority-typed-metadata" pattern="authority/names/*">
         <map:generate src="../assets/authority/names.xml" />
@@ -45,8 +44,9 @@
         <map:serialize type="xml"/>
       </map:match>
      </map:pipeline>
-
-    <!-- Metadata pipeline. -->
+     
+        
+   <!-- Metadata pipeline. -->
     <map:pipeline id="metadata" internal-only="true">
       <map:match id="local-typed-metadata" pattern="metadata/*/*/**.xml">
         <map:generate src="../content/xml/tei/{3}.xml" />
@@ -59,7 +59,7 @@
 
       <map:match id="local-metadata" pattern="*/metadata/*.xml" internal-only="true">
         <map:generate src="cocoon://_internal/dirlist/content/xml/tei.xml" />
-        <map:transform src="../stylesheets/metadata/xinclude.xsl">
+        <map:transform src="../stylesheets/metadata/xinclude_letters.xsl">
           <map:parameter name='id' value="{1}"/>
           <map:parameter name="type" value="{2}" />          
         </map:transform>
@@ -67,6 +67,7 @@
         <map:serialize type="xml"/>
       </map:match>
     </map:pipeline>
-  </map:pipelines>
-
+    
+    
+</map:pipelines>
 </map:sitemap>

@@ -22,8 +22,8 @@
   <xsl:param name="unclear" select="1" />
 
   <!-- Generate divs for TEI sections. -->
-  <xsl:template match="tei:group | tei:text | tei:floatingText |
-                       tei:front | tei:body | tei:back | tei:div">
+  <xsl:template match="tei:group | tei:floatingText | tei:text | tei:body |
+                       tei:front | tei:back | tei:div">
     <xsl:call-template name="tei-make-div" />
   </xsl:template>
 
@@ -139,7 +139,7 @@
   </xsl:template>
 
   <xsl:template match="tei:name[@key]|tei:rs[@key]">
-    <xsl:call-template name="tei-make-span" />
+    <xsl:call-template name="tei-make-span"/>
   </xsl:template>
 
   <!-- References. -->
@@ -168,52 +168,6 @@
     <xsl:call-template name="tei-make-span" />
   </xsl:template>
 
-  <!-- Figures. -->
-
-  <xsl:template match="tei:figure">
-    <xsl:param name="nested-link" select="0" />
-    <xsl:variable name="container-element">
-      <xsl:choose>
-        <xsl:when test="contains(concat(' ', @kiln:class, ' '), ' block ')">
-          <xsl:text>div</xsl:text>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:text>span</xsl:text>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
-    <xsl:element name="{$container-element}">
-      <xsl:attribute name="id">
-        <xsl:value-of select="@xml:id" />
-      </xsl:attribute>
-      <xsl:call-template name="tei-assign-classes" />
-      <xsl:variable name="root-id"
-                    select="ancestor::tei:TEI/@xml:id | ancestor::tei:teiCorpus/@xml:id" />
-      <img src="{$kiln:content-path}/images/{$root-id}/{tei:graphic/@url}">
-        <xsl:apply-templates mode="tei-alt-text" select="." />
-      </img>
-      <xsl:apply-templates select="*" />
-    </xsl:element>
-  </xsl:template>
-
-  <xsl:template match="tei:figure" mode="tei-alt-text">
-    <xsl:attribute name="alt">
-      <xsl:choose>
-        <xsl:when test="normalize-space(tei:figDesc)">
-          <xsl:value-of select="normalize-space(tei:figDesc)" />
-        </xsl:when>
-        <xsl:when test="normalize-space(tei:head)">
-          <xsl:value-of select="normalize-space(tei:head)" />
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:text />
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:attribute>
-  </xsl:template>
-
-  <xsl:template match="tei:figDesc" />
-
   <!-- Glyphs. -->
   <xsl:template match="tei:g">
     <xsl:variable name="root" select="ancestor::tei:TEI | ancestor::tei:teiCorpus" />
@@ -226,6 +180,7 @@
       <xsl:when test="$url">
         <xsl:apply-templates select="@*" />
         <span class="tei glyph">
+
           <img alt="{$alt}" src="/etexts/{$root/@xml:id}/{$url}">
             <xsl:if test="$title">
               <xsl:attribute name="title">
@@ -233,6 +188,7 @@
               </xsl:attribute>
             </xsl:if>
           </img>
+
         </span>
       </xsl:when>
       <xsl:otherwise>
@@ -248,37 +204,28 @@
 
   <!-- Page breaks. -->
   <xsl:template match="tei:pb">
-    <xsl:choose>
-      <xsl:when test="number($page-numbers)">
         <span class="tei pb" lang="en">
-          <xsl:apply-templates select="@xml:id" />
-          <xsl:variable name="page-label">
-            <xsl:choose>
-              <xsl:when test="normalize-space(@n)">
-                <xsl:text>page </xsl:text>
-                <xsl:value-of select="normalize-space(@n)" />
-              </xsl:when>
-              <xsl:otherwise>
-                <xsl:text>page break</xsl:text>
-              </xsl:otherwise>
-            </xsl:choose>
-          </xsl:variable>
-          <xsl:choose>
-            <xsl:when test="not(contains(concat(' ', @kiln:class, ' '), ' nested-link ')) and @xml:id">
+            <xsl:apply-templates select="@xml:id" />
+            <xsl:variable name='image_number' select='@n'/>
+            <xsl:if test="$image_number != '1'">
+            <br/>
+            <br/>
+            </xsl:if>
               <a class="tei pb" href="#{@xml:id}" title="page break">
-                <xsl:value-of select="$page-label" />
+                <xsl:text>Page </xsl:text>
+                <xsl:value-of select="$image_number"/>
               </a>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:value-of select="$page-label" />
-            </xsl:otherwise>
-          </xsl:choose>
+              <xsl:variable name="root" select="ancestor::tei:TEI"/>
+              <xsl:variable name="image" select="ancestor::tei:TEI/tei:teiHeader/tei:fileDesc/tei:notesStmt/tei:note/tei:list/tei:item[position()=$image_number]/tei:figure/tei:graphic"/>
+              <a href="{$kiln:content-path}/images/{$root/@xml:id}/{$image/@url}" data-lightbox='page'>
+                
+              <img class='page_image' src="{$kiln:content-path}/images/{$root/@xml:id}/{$image/@url}">
+                  <xsl:apply-templates mode="tei-alt-text" select="." />
+            </img>
+          </a>
+            <br/>
+            <br/>
         </span>
-      </xsl:when>
-      <xsl:when test="@xml:id">
-        <span class="tei pb" id="{@xml:id}" />
-      </xsl:when>
-    </xsl:choose>
   </xsl:template>
 
   <!-- Line breaks. -->
@@ -405,12 +352,12 @@
 
   <xsl:template name="tei-make-p">
     <p>
-      <xsl:apply-templates select="@*" />
-      <xsl:call-template name="tei-assign-classes">
+        <xsl:apply-templates select="@*" />
+        <xsl:call-template name="tei-assign-classes">
         <xsl:with-param name="html-element" select="'p'" />
-      </xsl:call-template>
-      <xsl:call-template name="tei-make-run-in-heading" />
-      <xsl:apply-templates select="node()" />
+        </xsl:call-template>
+        <xsl:call-template name="tei-make-run-in-heading" />
+        <xsl:apply-templates select="node()" />
     </p>
   </xsl:template>
 
@@ -467,8 +414,14 @@
   <xsl:template name="tei-make-span">
     <span>
       <xsl:apply-templates select="@*" />
-      <xsl:call-template name="tei-assign-classes" />
+      <xsl:call-template name="tei-assign-classes"/>
+      <xsl:if test='@ref'>
+        <xsl:attribute name='id'>
+            <xsl:value-of select='@ref'/>
+        </xsl:attribute>
+      </xsl:if>
       <xsl:apply-templates select="node()" />
+
     </span>
   </xsl:template>
 

@@ -1,9 +1,5 @@
-*.xpr
-*~
-sw/jetty/logs
-sw/jetty/temp
-webapps/openrdf-sesame/app_dir
-webapps/ROOT/content
-webapps/ROOT/WEB-INF/logs
-webapps/solr/data
-docs/build
+*.pyc
+*.log
+/*
+!/webapps/ROOT/content/xml
+!/webapps/ROOT/content/images

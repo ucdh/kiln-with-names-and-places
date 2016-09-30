@@ -13,11 +13,13 @@
 
   <xsl:output indent="yes" method="xml" />
 
-  <xsl:param name="path" />
+  <xsl:param name="path"/>
+  <xsl:param name="ref"/>
 
   <xsl:template match="/">
-    <file path="{replace($path, '.xml', '.html')}" xml_path="{$path}">
+    <file path="{replace($path, '.xml', '')}" xml_path="{$path}">
       <xsl:attribute name="id" select="tei:TEI/@xml:id" />
+    <xsl:attribute name="ref" select="$ref" />       
       <xsl:apply-templates select="tei:TEI/tei:teiHeader" />
     </file>
   </xsl:template>
@@ -28,7 +30,7 @@
     </xsl:if>
   </xsl:template>
 
-  <xsl:template match="tei:fileDesc/tei:titleStmt/tei:author">
+  <xsl:template match="tei:fileDesc/tei:titleStmt/tei:author/tei:name">
       <xsl:attribute name="author" select="normalize-space(.)" />
   </xsl:template>
 
@@ -36,12 +38,14 @@
       <xsl:attribute name="editor" select="normalize-space(.)" />
   </xsl:template>
 
-  <xsl:template match="tei:sourceDesc//tei:publicationStmt/tei:date">
-    <xsl:if test="not(preceding-sibling::tei:title)">
-      <xsl:attribute name="publication_date" select="normalize-space(.)" />
-    </xsl:if>
+  <xsl:template match="tei:profileDesc/tei:creation/tei:date">
+    <xsl:attribute name="publication_date" select="@when/normalize-space(.)" />
   </xsl:template>
-
-  <xsl:template match="text()" />
+  
+  <xsl:template match="tei:fileDesc/tei:notesStmt/tei:note/tei:list//tei:item[last()-1]/tei:figure/tei:graphic">
+        <xsl:attribute name="envelope_url" select="@url/normalize-space(.)" />
+  </xsl:template>
+  
+  <xsl:template match="text()"/>
 
 </xsl:stylesheet>

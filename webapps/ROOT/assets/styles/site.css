@@ -1,0 +1,11 @@
+.page_image {
+    max-width: 50%;
+    position: relative;
+    left: 20%;
+    float:right;
+    clear: both;
+}
+
+.tei.body p {
+    white-space: nowrap;
+}

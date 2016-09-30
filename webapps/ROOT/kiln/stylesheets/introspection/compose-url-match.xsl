@@ -12,8 +12,6 @@
        different in small details so that there is no value to
        overriding it. -->
 
-  <xsl:import href="utils.xsl" />
-
   <xsl:param name="url" />
 
   <xsl:variable name="separator" select="' SEPARATOR '" />
@@ -127,20 +125,8 @@
     <xsl:param name="match" />
     <xsl:param name="reference" />
     <xsl:if test="starts-with($reference, 'cocoon://')">
-      <xsl:variable name="cocoon-stripped"
+      <xsl:variable name="stripped"
                     select="substring-after($reference, 'cocoon://')" />
-      <!-- Remove query-string parameters from the URL, since they can
-           completely mess up the pattern matching. -->
-      <xsl:variable name="stripped">
-        <xsl:choose>
-          <xsl:when test="contains($cocoon-stripped, '?')">
-            <xsl:value-of select="substring-before($cocoon-stripped, '?')" />
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:value-of select="$cocoon-stripped" />
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:variable>
       <xsl:variable name="input">
         <xsl:for-each select="tokenize($stripped, '(\{)|(\})')">
           <xsl:choose>

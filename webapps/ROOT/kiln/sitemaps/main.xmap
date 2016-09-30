@@ -109,6 +109,8 @@
       </map:match>
     </map:pipeline>
 
+    
+      
     <map:pipeline internal-only="true">
       <!-- Directory listing. -->
       <map:match pattern="_internal/dirlist/**.xml">
@@ -118,6 +120,8 @@
         </map:generate>
         <map:serialize type="xml" />
       </map:match>
+      
+      
 
       <!-- Reverse URL matching. -->
       <map:match pattern="_internal/url/reverse.xsl">
