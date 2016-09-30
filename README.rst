@@ -1,1 +1,1 @@
-This repository contains the web and XML files for the Roy Bruce website.
+This repository contains the web files for the Roy Bruce website.
